@@ -75,6 +75,23 @@ function print_result(){
 ###################################
 # install python-pip django i2c-tools python-smbus python-opencv runtime #
 ###################################
+
+
+echo -e "\nInstalling python3\n"
+if sudo apt-get install python3-pip -y; then
+    echo -e "    Successfully installed python3\n"
+    is_installed_python_smbus=true
+else
+    echo -e "    Failed to installed python3\n"
+    echo -e "    Do you want to skip this? \c"
+    if_continue
+    if [ $? = 1 ] ; then
+        echo -e "    Skipped python3 installation."
+    else
+        end
+    fi
+fi
+
 echo -e "\nInstalling django \n"
 if sudo pip3 install django==2.0 ; then
     echo -e "    Successfully installed django runtime \n"
@@ -90,16 +107,16 @@ else
     fi
 fi
 
-echo -e "\nInstalling python3-smbus and git\n"
-if sudo apt-get install python3-smbus git -y; then
-    echo -e "    Successfully installed python-smbus and git\n"
+echo -e "\nInstalling python3-smbus\n"
+if sudo apt-get install python3-smbus -y; then
+    echo -e "    Successfully installed python-smbus\n"
     is_installed_python_smbus=true
 else
-    echo -e "    Failed to installed python-smbus and git\n"
+    echo -e "    Failed to installed python-smbus\n"
     echo -e "    Do you want to skip this? \c"
     if_continue
     if [ $? = 1 ] ; then
-        echo -e "    Skipped python-smbus and git installation."
+        echo -e "    Skipped python-smbus installation."
     else
         end
     fi
@@ -141,10 +158,10 @@ fi
 
 echo -e "Cloning repo \n"
 cd ../
-git clone --recursive https://github.com/sunfounder/SunFounder_PiCar.git
-cd SunFounder_PiCar
+git clone --recursive https://github.com/jamesggordon/SunFounder_PiCar.git car
+cd car
 echo -e "    Installing PiCar module \n"
-sudo python setup.py install
+#sudo python setup.py install
 sudo python3 setup.py install
 cd $repo_dir
 echo -e "complete\n"
